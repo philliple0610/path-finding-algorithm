@@ -72,25 +72,25 @@ function goToSurroundFourSquareAndWriteNewCost(cost, x, y) { //check squares aro
     let newCost = cost + 1;
     let newX = x - 1;
     let newY = y;
-    newFunction(newX, newY, newCost);
+    writeNewCost(newX, newY, newCost);
 
     //right square
     newX = x;
     newY = y + 1;
-    newFunction(newX, newY, newCost);
+    writeNewCost(newX, newY, newCost);
 
     //bottom square
     newX = x + 1;
     newY = y;
-    newFunction(newX, newY, newCost);
+    writeNewCost(newX, newY, newCost);
 
     //left square
     newX = x;
     newY = y - 1;
-    newFunction(newX, newY, newCost);
+    writeNewCost(newX, newY, newCost);
 }
 
-function newFunction(newX, newY, newCost) {
+function writeNewCost(newX, newY, newCost) {
     if (newX >= 0 && newX <= 7 && newY >= 0 && newY <= 7) {
         let square = document.getElementById(newX + '_' + newY).innerHTML;
         if (square == '&nbsp;') {
@@ -110,12 +110,40 @@ function newFunction(newX, newY, newCost) {
     }
 }
 
-function newgame(){
+function clearTable() {
     for(var x = 0; x < 8; x++) {
-    for(var y = 0; y < 8; y++)
-            document.getElementById(x + '_' + y).innerHTML = '&nbsp;';
+        for(var y = 0; y < 8; y++) {
+            let square = document.getElementById(x + '_' + y).innerHTML;
+            if (square == 'X'){
+                document.getElementById(x + '_' + y).innerHTML = '&nbsp;';
+            }
+            else {
+                let squareInt = parseInt(square);
+                if (squareInt > 0) {
+                    document.getElementById(x + '_' + y).innerHTML = '&nbsp;';
+                }
+            }
+        }
     }
 }
+
+function clearTable2(){
+    const ids = ["0_5", "1_1", "1_2", "1_3", "1_4", "1_5", "1_6", "2_1", "2_6", "3_1", "3_3", "3_5", "3_6", "4_1", 
+                "4_3", "4_6", "5_1", "5_3", "5_5", "5_6", "6_1", "6_2", "6_3", "6_4", "6_5", "6_6"];
+    ids.forEach(id => {
+        let square = document.getElementById(id).innerHTML;
+        if (square == 'X'){
+            document.getElementById(id).innerHTML = '&nbsp;';
+        }
+        else {
+            let squareInt = parseInt(square);
+            if (squareInt > 0) {
+                document.getElementById(id).innerHTML = '&nbsp;';
+            }
+        }
+    });
+}
+
 
 // squareclicked is a function that is called whenever a button is clicked.
 function squareclicked(x,y) // square is a button object
