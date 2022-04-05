@@ -1,26 +1,50 @@
 h1 {
-    text-align: center;
-    font-family: 'Indie Flower', cursive;
-  font-size: 53px;
+  /* text-align: center !important; */
+  font-family: 'Indie Flower', cursive !important;
+  font-size: 53px !important;
 }
 div {
-  text-align: center;
-  margin: 0px auto;
-    text-align: center;
+  text-align: center !important;
+  margin: 0px auto !important;
+  text-align: center !important;
   margin: auto;
 }
 body {
-    background-color: #6b6e70;
+  background-color: #6b6e70 !important;
 }
 
 table, th, td {
-    border: 3px solid black;
-    border-collapse: collapse;
+  border: 3px solid black;
+  border-collapse: collapse;
+}
+
+.center {
+  margin: auto;
+  margin-top: 30px;
+}
+
+.myh1 { 
+  text-align: center;
+  font-family: 'Indie Flower', cursive;
+  font-size: 53px;
+  font-weight: bold;
+  color: #000000;
+}
+
+.myp {
+  font-family: 'Times New Roman';
+  color: #000000;
+  font-size: 24px;
+  text-align: center;
+}
+
+.mybutton {
+  align-content: center;
 }
 
 .cell {
-  width:40px;
-  height:40px;
+  width:40px !important;
+  height:40px !important;
   background: #FFFFFF;
   font-family: arial;
   font-weight: bold;
@@ -30,8 +54,8 @@ table, th, td {
 }
 
 .wall {
-  width:40px;
-  height:40px;
+  width:40px !important;
+  height:40px !important;
   background: #1b1a1a;
   font-family: arial;
   font-weight: bold;
@@ -69,4 +93,17 @@ fieldset {
 .cell:hover {
   background: #C2DBFC;
   text-align: center;
+}
+
+.mysquare {
+  left: 0;
+  width: 100%;
+  text-align: center;
+  font-size: 2em !important;
+  margin: auto;
+  color: #FB654D
+}
+
+.mybird {
+  color: rgb(12, 125, 218) !important;
 }
