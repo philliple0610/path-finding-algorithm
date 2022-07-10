@@ -1,5 +1,4 @@
 // Global Varibles
-var lowest_cost = 100;
 var squareLocation = {
     "x":0,
     "y":5,
@@ -12,146 +11,164 @@ var birdLocation = {
 var arr = {
     "0_5": {
         "cost": -1,
-        "square": 0,
+         
     },
     "1_1": {
         "cost": -1,
-        "square": 0,
+         
     },
     "1_2": {
         "cost": -1,
-        "square": 0,
+         
         
     },
     "1_3": {
         "cost": -1,
-        "square": 0,
+         
         
     },
     "1_4": {
         "cost": -1,
-        "square": 0,
+         
         
     },
     "1_5": {
         "cost": -1,
-        "square": 0,
+         
         
     },
     "1_6": {
         "cost": -1,
-        "square": 0,
+         
         
     },
     "2_1": {
         "cost": -1,
-        "square": 0,
+         
         
     },
     "2_6": {
         "cost": -1,
-        "square": 0,
+         
         
     },
     "3_1": {
         "cost": -1,
-        "square": 0,
+         
         
     },
     "3_3": {
         "cost": -1,
-        "square": 0,
+         
         
     },
     "3_5": {
         "cost": -1,
-        "square": 0,
+         
         
     },
     "3_6": {
         "cost": -1,
-        "square": 0,
+         
         
     },
     "4_1": {
         "cost": -1,
-        "square": 0,
+         
         
     },
     "4_3": {
         "cost": -1,
-        "square": 0,
+         
         
     },
     "4_6": {
         "cost": -1,
-        "square": 0,
+         
         
     },
     "5_1": {
         "cost": -1,
-        "square": 0,
+         
     
     },
     "5_3": {
         "cost": -1,
-        "square": 0,
+         
         
     },
     "5_5": {
         "cost": -1,
-        "square": 0,
+         
         
     },
     "5_6": {
         "cost": -1,
-        "square": 0,
+         
         
     },
     "6_1": {
         "cost": -1,
-        "square": 0,
+         
         
     },
     "6_2": {
         "cost": -1,
-        "square": 0,
+         
         
     },
     "6_3": {
         "cost": -1,
-        "square": 0,
+         
         
     },
     "6_4": {
         "cost": -1,
-        "square": 0,
+         
         
     },
     "6_5": {
         "cost": -1,
-        "square": 0,
+         
         
     },
     "6_6": {
         "cost": -1,
-        "square": 0,
+         
         
     },
 };
 
 // squareclicked is a function that is called whenever a button is clicked.
 function squareclicked(x,y) { // square is a button object
+    // clear the cost table (make everything -1)
+    for (const index in arr) {
+        arr[index].cost = -1;
+    }
+
+    // start the recalculating process
     arr[x+"_"+y].cost = 0;
-    squareLocation.x = x
-    squareLocation.y = y
     goToSurroundFourSquareAndWriteNewCost(0, x, y);
+    console.log(arr["6_1"].cost);
+
+    // clear the square
+    if (birdLocation.x == squareLocation.x && birdLocation.y == squareLocation.y){
+        document.getElementById(squareLocation.x+"_"+squareLocation.y).innerHTML = '<span class="fa-stack fa-lg"> <i class="fa fa-twitter fa-stack-1x"></i> </span>';
+    }
+    else {
+        document.getElementById(squareLocation.x+"_"+squareLocation.y).innerHTML = "&nbsp;";
+    }  
+
+
+    // redraw the square
     if (x == birdLocation.x && y == birdLocation.y){
         document.getElementById(x+"_"+y).innerHTML = '<span class="fa-stack fa-lg"> <i class="fa fa-square-o fa-stack-2x"></i> <i class="fa fa-twitter fa-stack-1x"></i> </span>';
     }
     else {
         document.getElementById(x+"_"+y).innerHTML ='<span class="fa-stack fa-lg"> <i class="fa fa-square-o fa-stack-2x"></i> </span>';
     }
+    squareLocation.x = x
+    squareLocation.y = y
 }
 
 function goToSurroundFourSquareAndWriteNewCost(cost, x, y) { //check squares around it
@@ -201,7 +218,7 @@ function writeNewCost(newX, newY, newCost) {
 // birdLocation.y = bird_y + 1
 
 function findBirdLocation(newsquare_x, newsquare_y, lowest_cost, newbird_x, newbird_y) {
-    if (arr[newsquare_x + '_' + newsquare_y] != null) {
+    if (arr[newsquare_x + '_' + newsquare_y]) {
         if (arr[newsquare_x + '_' + newsquare_y].cost > -1 && arr[newsquare_x + '_' + newsquare_y].cost < lowest_cost) {
             lowest_cost = arr[newsquare_x + '_' + newsquare_y].cost;
             newbird_x = newsquare_x;
@@ -212,14 +229,17 @@ function findBirdLocation(newsquare_x, newsquare_y, lowest_cost, newbird_x, newb
 }
 
 var myInterval = setInterval(function() {
+    if (birdLocation.x == squareLocation.x && birdLocation.y == squareLocation.y){
+        return;
+    }
+
+    let lowest_cost = 100;
     let bird_x = birdLocation.x;
     let bird_y = birdLocation.y;
-    // find lowest_cost and lowest_location
+    let newbird_x = -1;
+    let newbird_y = -1;
 
     // top square
-    let newbird_x = squareLocation.x;
-    let newbird_y = squareLocation.y;
-    
     let newsquare_x = bird_x - 1;
     let newsquare_y = bird_y;
     ({ lowest_cost, newbird_x, newbird_y } = findBirdLocation(newsquare_x, newsquare_y, lowest_cost, newbird_x, newbird_y));
@@ -238,6 +258,10 @@ var myInterval = setInterval(function() {
     newsquare_x = bird_x;
     newsquare_y = bird_y - 1;
     ({ lowest_cost, newbird_x, newbird_y } = findBirdLocation(newsquare_x, newsquare_y, lowest_cost, newbird_x, newbird_y));
+    
+    if (newbird_x == -1 || newbird_y == -1){
+        return;
+    }
 
     if (lowest_cost > 0){
         if (newbird_x != bird_x || newbird_y != bird_y){
@@ -249,17 +273,11 @@ var myInterval = setInterval(function() {
         if (newbird_x != bird_x || newbird_y != bird_y){
             document.getElementById(newbird_x+"_"+newbird_y).innerHTML = '<span class="fa-stack fa-lg"> <i class="fa fa-square-o fa-stack-2x"></i> <i class="fa fa-twitter fa-stack-1x"></i> </span>';
             document.getElementById(bird_x+"_"+bird_y).innerHTML = "&nbsp;";
+            lowest_cost = 100;
     }
 }
-    // else {
-    //     square_x = squareLocation.x;
-    //     square_y = squareLocation.y;
-    //     document.getElementById(square_x+"_"+square_y).innerHTML = '<span class="fa-stack fa-lg"> <i class="fa fa-square-o fa-stack-2x"></i> <i class="fa fa-twitter fa-stack-1x"></i> </span>';
-    //     console.log(arr["0_5"].cost, arr["6_1"].cost, birdLocation.x, birdLocation.y);
-    // }
     birdLocation.x = newbird_x;
     birdLocation.y = newbird_y;
-    console.log(birdLocation.x, birdLocation.y);
 }, 500);
 
 
@@ -347,130 +365,127 @@ function clearTable(){
     arr = {
         "0_5": {
             "cost": -1,
-            "square": 0,
+             
         },
         "1_1": {
             "cost": -1,
-            "square": 0,
+             
         },
         "1_2": {
             "cost": -1,
-            "square": 0,
+             
             
         },
         "1_3": {
             "cost": -1,
-            "square": 0,
+             
             
         },
         "1_4": {
             "cost": -1,
-            "square": 0,
+             
             
         },
         "1_5": {
             "cost": -1,
-            "square": 0,
+             
             
         },
         "1_6": {
             "cost": -1,
-            "square": 0,
+             
             
         },
         "2_1": {
             "cost": -1,
-            "square": 0,
+             
             
         },
         "2_6": {
             "cost": -1,
-            "square": 0,
+             
             
         },
         "3_1": {
             "cost": -1,
-            "square": 0,
+             
             
         },
         "3_3": {
             "cost": -1,
-            "square": 0,
+             
             
         },
         "3_5": {
             "cost": -1,
-            "square": 0,
+             
             
         },
         "3_6": {
             "cost": -1,
-            "square": 0,
+             
             
         },
         "4_1": {
             "cost": -1,
-            "square": 0,
+             
             
         },
         "4_3": {
             "cost": -1,
-            "square": 0,
+             
             
         },
         "4_6": {
             "cost": -1,
-            "square": 0,
+             
             
         },
         "5_1": {
             "cost": -1,
-            "square": 0,
+             
             
         },
         "5_3": {
             "cost": -1,
-            "square": 0,
+             
             
         },
         "5_5": {
             "cost": -1,
-            "square": 0,
+             
             
         },
         "5_6": {
             "cost": -1,
-            "square": 0,
+             
             
         },
         "6_1": {
             "cost": -1,
-            "square": 0,
+             
             
         },
         "6_2": {
             "cost": -1,
-            "square": 0,
+             
             
         },
         "6_3": {
             "cost": -1,
-            "square": 0,
+             
             
         },
         "6_4": {
             "cost": -1,
-            "square": 0,
             
         },
         "6_5": {
             "cost": -1,
-            "square": 0,
             
         },
         "6_6": {
             "cost": 5,
-            "square": 0,
             
         },
     };
